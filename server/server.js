@@ -1,19 +1,14 @@
 const express = require('express');
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const bodyParser = require('body-parser');
-
 const app = express();
+const bodyParser = require('body-parser');
+const { encryptionControllers } = require('./controllers/encryptionController');
 
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(passport.initialize());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// Routes
-app.get('/', (req, res) => {
-  res.send('Hello, world!');
-});
+app.post('/encrypt', encryptionControllers.encryptData);
+
+app.post('/decrypt', encryptionControllers.decryptData);
 
 app.listen(3000, () => {
   console.log('Server started on port 3000');
