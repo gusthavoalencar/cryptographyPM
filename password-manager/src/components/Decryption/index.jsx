@@ -2,28 +2,50 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './index.css';
 
+//created a function component
 function Decryption(props) {
+  //managing react states
   const [plaintext, setPlaintext] = useState('');
   const [password, setPassword] = useState('');
   const [encryptedCode, setEncryptedCode] = useState('');
+  const [error, setError] = useState('');
 
+  //function to the sumbmission of decypher 
   const handleSubmitDecypher = async () => {
-    // Code to make the API request
+    //validating the input areas
+    if (!encryptedCode || !password) {
+      setError('Decrypt code and password cannot be empty');
+      return;
+    }
+
+  //doing the post request
     try {
       const response = await axios.post('http://localhost:3000/decrypt', {
         encryptedCode,
         password,
       });
-      // Handle the response data
+      
+      //if status is 200, display the decyphered text
       if (response.status === 200) {
+        setError('');
         console.log(response.data);
         setPlaintext(response.data.plaintext);
+        return;
       }
-    } catch (error) {
-      // Handle any errors
-      console.error(error);
+      //else sets the error message to the response
+      setError(response.data.error);
+    } 
+    //handle any other errors
+    catch (error) {
+      if (error.response) {
+        setError(error.response.data.error);
+      } else {
+        setError('Failed to connect to server');
+      }
+      console.log(error.message);
     }
   };
+  
 
   return (
     <div>
@@ -87,6 +109,8 @@ function Decryption(props) {
           </div>
         )}
       </div>
+      {error && <div className="text-danger fs-3 text-center">{error}</div>}
+
     </div>
   );
 }

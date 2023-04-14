@@ -1,25 +1,38 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './index.css';
 
+//created a function component
 function Encryption(props) {
+  //managing react states
   const [plaintext, setPlaintext] = useState('');
   const [password, setPassword] = useState('');
   const [encryptResult, setEncryptResult] = useState('');
+  const [error, setError] = useState('');
 
+  //function to handle the submission of encryption
   const handleSubmitCypher = async () => {
-    // Code to make the API request
+    //validating the input areas
+    if (!plaintext || !password) {
+      setError('Text to encrypt and password cannot be empty');
+      return;
+    }
+
+    //doing the post request
     try {
       const response = await axios.post('http://localhost:3000/encrypt', {
         plaintext,
         password,
       });
-      // Handle the response data
+
+      //if status is 200, display the encrypted code
       if (response.status === 200) {
-        console.log(response.data);
+        setError('');
         setEncryptResult(response.data.encryptedCode);
       }
-    } catch (error) {
-      // Handle any errors
+    } 
+    //handle any other errors
+    catch (error) {
       console.error(error);
     }
   };
@@ -70,17 +83,20 @@ function Encryption(props) {
         {encryptResult !== '' && (
           <div className="input-group mb-3">
             <span className="input-group-text" id="basic-addon1">
-              Encrypted Code
+              Encrypted code
             </span>
             <input
               type="text"
               className="form-control"
               value={encryptResult}
               readOnly
+              rows={5}
             />
           </div>
         )}
       </div>
+      {error && <div className="text-danger fs-3 text-center">{error}</div>}
+
     </div>
   );
 }
