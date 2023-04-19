@@ -9,13 +9,13 @@ function encrypt(plaintext, password) {
     .update(password)
     .digest('base64')
     .substr(0, 32);
-  
+
   //generate a random 16-byte initialization vector
   const iv = crypto.randomBytes(16);
 
   //create a cipher object with the chosen algorithm, key, and IV
   const cipher = crypto.createCipheriv(algorithm, key, iv);
-  
+
   //update the cipher with the plaintext data, encoding to hexadecimal
   let ciphertext = cipher.update(plaintext, 'utf8', 'hex');
   ciphertext += cipher.final('hex');

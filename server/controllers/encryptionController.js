@@ -9,7 +9,7 @@ const encryptionControllers = {
       const { plaintext, password } = req.body;
       //call the encrypt function with the plaintext and password, and obtain the ciphertext and IV
       const { ciphertext, iv } = encrypt(plaintext, password);
-      //joined the ciphertext and IV with a - and send as response, 
+      //joined the ciphertext and IV with a - and send as response,
       //this is so it can mask what type of encryptions its used!!
       const encryptedCode = `${ciphertext}-${iv}`;
       return res.json({ encryptedCode });

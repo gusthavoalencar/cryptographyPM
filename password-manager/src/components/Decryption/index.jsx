@@ -10,7 +10,7 @@ function Decryption(props) {
   const [encryptedCode, setEncryptedCode] = useState('');
   const [error, setError] = useState('');
 
-  //function to the sumbmission of decypher 
+  //function to the sumbmission of decypher
   const handleSubmitDecypher = async () => {
     //validating the input areas
     if (!encryptedCode || !password) {
@@ -18,13 +18,13 @@ function Decryption(props) {
       return;
     }
 
-  //doing the post request
+    //doing the post request
     try {
-      const response = await axios.post('http://localhost:3000/decrypt', {
+      const response = await axios.post('http://localhost:2873/decrypt', {
         encryptedCode,
         password,
       });
-      
+
       //if status is 200, display the decyphered text
       if (response.status === 200) {
         setError('');
@@ -34,9 +34,8 @@ function Decryption(props) {
       }
       //else sets the error message to the response
       setError(response.data.error);
-    } 
-    //handle any other errors
-    catch (error) {
+    } catch (error) {
+      //handle any other errors
       if (error.response) {
         setError(error.response.data.error);
       } else {
@@ -45,7 +44,6 @@ function Decryption(props) {
       console.log(error.message);
     }
   };
-  
 
   return (
     <div>
@@ -110,7 +108,6 @@ function Decryption(props) {
         )}
       </div>
       {error && <div className="text-danger fs-3 text-center">{error}</div>}
-
     </div>
   );
 }

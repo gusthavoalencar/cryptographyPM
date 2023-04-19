@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/encrypt', encryptionControllers.encryptData);
 app.post('/decrypt', encryptionControllers.decryptData);
 
-// Start the server on port 3000
-app.listen(3000, () => {
-  console.log('Server started on port 3000');
+// Start the server on port 2873
+app.listen(2873, () => {
+  console.log('Server started on port 2873');
 });

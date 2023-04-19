@@ -20,7 +20,7 @@ function Encryption(props) {
 
     //doing the post request
     try {
-      const response = await axios.post('http://localhost:3000/encrypt', {
+      const response = await axios.post('http://localhost:2873/encrypt', {
         plaintext,
         password,
       });
@@ -30,9 +30,8 @@ function Encryption(props) {
         setError('');
         setEncryptResult(response.data.encryptedCode);
       }
-    } 
-    //handle any other errors
-    catch (error) {
+    } catch (error) {
+      //handle any other errors
       console.error(error);
     }
   };
@@ -96,7 +95,6 @@ function Encryption(props) {
         )}
       </div>
       {error && <div className="text-danger fs-3 text-center">{error}</div>}
-
     </div>
   );
 }
