@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const algorithm = 'aes-256-cbc';
 
-//function for encrypting plaintext with a password
+//function for encrypting plaintext with a password, this part was influenced by: https://dev.to/jobizil/encrypt-and-decrypt-data-in-nodejs-using-aes-256-cbc-2l6d
 function encrypt(plaintext, password) {
   //generate a 32-byte key from the password using SHA-256 and base64 encoding
   const key = crypto
@@ -27,7 +27,7 @@ function encrypt(plaintext, password) {
   };
 }
 
-//function for decrypting ciphertext with an IV and password
+//function for decrypting ciphertext with an IV and password, this part was influenced by: https://dev.to/jobizil/encrypt-and-decrypt-data-in-nodejs-using-aes-256-cbc-2l6d
 function decrypt(ciphertext, iv, password) {
   //generate a 32-byte key from the password using SHA-256 and base64 encoding
   const key = crypto
